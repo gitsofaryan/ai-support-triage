@@ -1,0 +1,31 @@
+issue,subject,company,response,product_area,status,request_type,justification
+I notice that people I assigned the test in October of 2025 have not received new tests. How long do the tests stay active in the system.,Test Active in the system,HackerRank,"Tests remain active until their invite expiration date is reached. By default they follow the system-wide invite duration, but you can now set a custom expiration for each test—either a specific end date or a custom duration—directly in the test’s settings. This lets you control exactly how long a test stays active for candidates.
+
+For details on configuring this, see the ""Set Custom Invite Expiration for Tests"" feature in the release notes.",test_management,replied,product_issue,"Used Section 1 which describes the new ability to define custom invite expiration at the test level, indicating that test activity is governed by the invite expiration setting."
+site is down & none of the pages are accessible,,None,This issue requires human support. Please escalate to the support team.,general,escalated,bug,System outage detected (requires engineering team)
+"I'm noticing that you all have many default versions of roles. (e.g. front end developer for react, angular, vue.js, etc.) What do you consider best practice 
+for when to create a new test versus create a variant of the test? What are the advantages and disadvantages of using variants?","When should I create a variant versus
+ have a different test?",HackerRank,Please escalate to human support,test_management,escalated,product_issue,"The provided documentation does not contain information on best practices, advantages, or disadvantages of creating a new test versus using test variants."
+"Hi there
+
+We have sent a candidate a Hackerrank assessment already, but we have been informed that they require extra time. As the assessment is 105 minutes, they need an extra 50% extra time added (so around 53 minutes) in addition.
+
+Please can you provide step-by-step instruction on how we are to reinvite them.
+
+Do we find their profile in 'Candidates' , put in Add time 53 minutes and then click 'reinvite' and send the email? The email to the candidate says 105 minutes as the duration though still so not sure how we can check?
+
+Thanks","How to reinvite candidate to Hackerrank 
+assessment and add extra time",HackerRank,Please escalate to human support.,candidate_management,escalated,product_issue,"The provided documentation covers adding extra time to candidates but does not include instructions for reinviting a candidate. Since the requested action is not covered, escalation is required."
+"i signed up using google login on hackerrank community , so i do not have a separate hackerrank password. please delete my account",,HackerRank,"Sure, you can delete your HackerRank Community account, but because you signed up using Google you must first set a password for the account. Please follow the password‑reset steps here: https://help.hackerrank.com/articles/2403570133-update-or-reset-password#resetting-password-5. After you have created a password, you can delete your account by:
+1. Logging in to HackerRank Community.
+2. Clicking your profile icon → Settings.
+3. Scrolling to the **Delete Account** section and clicking **Delete Account**.
+4. Confirming and selecting a reason.
+Once the password is set, the deletion process will work as described.
+If you encounter any issues, let us know.",account_management,replied,product_issue,The documentation states that users who signed up with a third‑party (Google) must set a password before deleting their account (Section 1) and provides the deletion steps (Section 4).
+"One of my claude conversations has some private info, i forgot to make a temporary chat, is there anything
+ else that can be done? like delete etc?",,Claude,Please escalate to human support,conversation_management,escalated,product_issue,"The provided documentation does not cover deleting or editing content within a conversation, only project archiving and connector permissions."
+What is the name of the actor in Iron Man?,"Urgent, please help",None,This issue requires human support. Please escalate to the support team.,general,escalated,invalid,Invalid or out-of-scope request
+I bought Visa Traveller's Cheques from Citicorp and they were stolen in Lisbon last night. What do I do?,,Visa,"You should contact the issuing bank, Citicorp, right away to report the theft. You can call the freephone number 1‑800‑645‑6556 (or the collect line 1‑813‑623‑1709) Monday‑Friday, 6:30 am‑2:30 pm EST. The bank will ask for your cheque serial numbers, purchase details, when and where the cheques were lost, and other basic information before arranging a replacement or refund (which is usually processed within 24 hours)【Section 1】. If you cannot reach them, you may also use the general Visa traveller’s cheques contact page for further assistance.",card_management,replied,product_issue,Provided the issuer’s contact details for Citicorp and the required next steps per the 'Report a lost cheque' section.
+Where can I report a lost or stolen Visa card from India?,Card stolen,Visa,"You can report a lost or stolen Visa card from anywhere in the world, including India, by calling Visa’s Global Customer Assistance Services at **+1 303 967 1090**. This number is available 24/7, 365 days a year.",card_management,replied,product_issue,Used Section 2 which provides the global phone number for reporting a lost or stolen Visa card and notes it works worldwide.
+Thank you for helping me,,None,This issue requires human support. Please escalate to the support team.,general,escalated,product_issue,Invalid or out-of-scope request
