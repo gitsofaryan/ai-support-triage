@@ -23,6 +23,11 @@ from dotenv import load_dotenv
 
 # Fix for OMP: Error #15 (Multiple OpenMP runtimes on Windows)
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Suppress TF noise
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+import warnings
+warnings.filterwarnings("ignore")
 
 load_dotenv()
 
@@ -105,7 +110,7 @@ class SupportTriageAgent:
         # Initialize Hybrid RAG Engine (FAISS + BM25)
         try:
             from engine import HybridEngine
-            self.hybrid_engine = HybridEngine(data_dir=resolved_data_dir, verbose=False)
+            self.hybrid_engine = HybridEngine(data_dir=resolved_data_dir, verbose=True)
             console.print("[bold green]✓[/bold green] Hybrid RAG Engine [dim](FAISS+BM25)[/dim] active")
         except Exception as e:
             console.print(f"[bold red]✗[/bold red] Hybrid Engine failed: {e}")

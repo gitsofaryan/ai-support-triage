@@ -49,7 +49,7 @@ class Reasoner:
                     default_headers={"Authorization": f"Bearer {openrouter_key}"}
                 )
                 self.provider = "openrouter"
-                self.model = "openai/gpt-oss-120b:free"
+                self.model = os.environ.get("MODEL_NAME", "openai/gpt-oss-120b:free")
                 return
             except Exception as e:
                 print(f"[Reasoning] OpenRouter init failed: {e}")

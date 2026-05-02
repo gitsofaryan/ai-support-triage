@@ -9,7 +9,7 @@ Key improvement over ARIA (competitor):
   - The two retrievers are fused 50/50 via RRF for best-of-both-worlds retrieval.
 
 Performance:
-  - First run: ~2-3 min (builds FAISS index + caches to disk).
+  - First run: ~60s (builds FAISS index + caches to disk with optimized chunking).
   - Subsequent runs: <5 sec (loads cached index).
 """
 
@@ -41,9 +41,9 @@ except ImportError:
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-EMBEDDING_MODEL = "openai/text-embedding-3-small"
-CHUNK_SIZE = 600
-CHUNK_OVERLAP = 100
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"  # Free local model — no API credits needed
+CHUNK_SIZE = 2000
+CHUNK_OVERLAP = 150
 CACHE_DIR = ".faiss_cache"
 
 # No hardcoded knowledge used. Purely corpus-based.
@@ -148,19 +148,16 @@ class HybridEngine:
         return splits
 
     def _get_embeddings(self) -> Any:
-        """Initialize OpenAI-compatible embeddings via OpenRouter."""
-        from langchain_openai import OpenAIEmbeddings
-        
+        """Initialize local HuggingFace embeddings (no API needed, zero cost)."""
+        try:
+            from langchain_huggingface import HuggingFaceEmbeddings
+        except ImportError:
+            from langchain_community.embeddings import HuggingFaceEmbeddings
         if self._embeddings is None:
-            api_key = os.environ.get('OPENROUTER_API_KEY')
-            if not api_key:
-                raise ValueError("OPENROUTER_API_KEY not found in environment. Required for embeddings.")
-            
-            self._embeddings = OpenAIEmbeddings(
-                model=EMBEDDING_MODEL,
-                openai_api_key=api_key,
-                openai_api_base="https://openrouter.ai/api/v1",
-                default_headers={"Authorization": f"Bearer {api_key}"}
+            self._embeddings = HuggingFaceEmbeddings(
+                model_name=EMBEDDING_MODEL,
+                model_kwargs={'device': 'cpu'},
+                encode_kwargs={'normalize_embeddings': True}
             )
         return self._embeddings
 
@@ -180,7 +177,10 @@ class HybridEngine:
             current_fingerprint = self._get_data_fingerprint()
             embeddings = self._get_embeddings()
 
+            # CRITICAL: always initialize bm25_retriever to avoid scoping bug
+            bm25_retriever = None
             cache_valid = False
+
             if os.path.exists(faiss_path) and os.path.exists(fingerprint_path) and os.path.exists(splits_cache) and os.path.exists(bm25_cache):
                 try:
                     with open(fingerprint_path, 'r') as f:
@@ -206,6 +206,7 @@ class HybridEngine:
                         self._log("[Engine] Knowledge base loaded ✓")
                 except Exception as e:
                     self._log(f"[Hybrid] Cache load failed: {e}, rebuilding...")
+                    bm25_retriever = None
 
             if not cache_valid:
                 # Step 2: Load and split all documents
@@ -237,14 +238,14 @@ class HybridEngine:
 
             # Step 5: Ensemble (Reciprocal Rank Fusion)
             faiss_retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
-            if EnsembleRetriever:
+            if EnsembleRetriever and bm25_retriever is not None:
                 self._log("[Hybrid] Ensemble Retriever (50/50 RRF) ✓")
                 self.retriever = EnsembleRetriever(
                     retrievers=[bm25_retriever, faiss_retriever],
                     weights=[0.5, 0.5]
                 )
             else:
-                self._log("[Hybrid] EnsembleRetriever unavailable, using FAISS-only fallback")
+                self._log("[Hybrid] Using FAISS-only retriever")
                 self.retriever = faiss_retriever
 
         self._log(f"[Hybrid] ✓ Pipeline ready ({len(self._all_splits)} chunks indexed)")
