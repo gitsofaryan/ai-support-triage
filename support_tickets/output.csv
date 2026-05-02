@@ -1,35 +1,72 @@
-issue,subject,company,response,product_area,status,request_type,justification
-site is down & none of the pages are accessible,,None,This issue requires human support. Please escalate to the support team.,general,escalated,bug,System outage detected (requires engineering team)
-What is the name of the actor in Iron Man?,"Urgent, please help",None,This issue requires human support. Please escalate to the support team.,general,escalated,invalid,Invalid or out-of-scope request
-Thank you for helping me,,None,This issue requires human support. Please escalate to the support team.,general,escalated,product_issue,Invalid or out-of-scope request
-"One of my claude conversations has some private info, i forgot to make a temporary chat, is there anything
- else that can be done? like delete etc?",,Claude,Please escalate to human support,conversation_management,escalated,product_issue,"The provided documentation does not contain information on deleting or modifying private information within a conversation; therefore, the request cannot be handled with the available context."
-"I'm noticing that you all have many default versions of roles. (e.g. front end developer for react, angular, vue.js, etc.) What do you consider best practice 
-for when to create a new test versus create a variant of the test? What are the advantages and disadvantages of using variants?","When should I create a variant versus
- have a different test?",HackerRank,Please escalate to human support,test_management,escalated,product_issue,"The provided documentation describes how to create and manage test variants but does not contain guidance on best‑practice decisions for when to create a new test versus a variant, nor does it list advantages or disadvantages of using variants. Therefore, the request cannot be answered using the given context."
-I notice that people I assigned the test in October of 2025 have not received new tests. How long do the tests stay active in the system.,Test Active in the system,HackerRank,Please escalate to human support,test_management,escalated,product_issue,"The provided documentation does not contain information about the default active duration of tests; only custom invite expiration is covered, which does not answer the question."
-"Hi there
+Issue,Subject,Company,status,product_area,response,justification,request_type
+,,,replied,account_management,Only a workspace Admin or Owner can restore an Enterprise seat that was removed. Please ask your IT admin (or another Admin/Owner) to re‑assign you an Enterprise seat in the organization settings. Support cannot override admin seat removals.,Section 5 (Core_Policies) states that only a workspace Admin or Owner can restore a seat and support cannot override admin removals. Section 1 notes that restoring access involves selecting an “Enterprise seat.”,product_issue
+,,,replied,test_management,"HackerRank support cannot manually change test scores or review answers. All grading is automated and final. If you believe there was a platform issue, you should discuss it with your recruiter or hiring team, who can decide whether a retest is appropriate.",Core_Policies section states that support cannot manually change scores and all grading is final (Core_Policies).,product_issue
+,,,replied,card_management,"If you have a problem with a merchant – such as receiving the wrong product and not receiving a response – you can report the issue by filling out the online form here: https://usa.visa.com/Forms/visa-rules.html.  Additionally, to request a refund for the charge, you should contact your card issuer or bank using the free‑phone number on the front or back of your Visa card.  Your issuer can initiate a dispute and may require details about the transaction.
 
-We have sent a candidate a Hackerrank assessment already, but we have been informed that they require extra time. As the assessment is 105 minutes, they need an extra 50% extra time added (so around 53 minutes) in addition.
+For any further assistance, you may also use the general Visa contact form: https://usa.visa.com/Forms/contact-us-form.html.",Section 1 advises using the merchant concern form; Section 5 instructs to contact the issuer to dispute a charge. Both sections directly address the user’s issue.,product_issue
+,,,replied,interview_management,"If you would like a refund for your mock interview, please email help@hackerrank.com. The support team will promptly review your request.",Section 1 states refunds should be requested by contacting help@hackerrank.com. Section 4 confirms mock interview refunds are handled via that email.,bug
+,,,replied,billing_payment,"To request a refund for your paid Claude plan, follow these steps:
+1. Log in to your Claude account.
+2. Click your initials or name in the lower‑left corner.
+3. Choose **Get help** to open the support messenger.
+4. Click **Send us a message**.
+5. Accept the terms, then select **Claude Refund Request**.
+6. Pick the reason for your refund and follow the prompts to check eligibility.
+7. If you’re eligible, continue in the messenger to cancel the plan and receive your refund.
+If you cannot log in to the account associated with the payment, you’ll need to contact Support using a different email and CC the email tied to the inaccessible account. Use this link: https://support.claude.com/en/articles/9015913-how-to-get-support",Based on refund request procedure outlined in Section 3 and handling of inaccessible accounts in Section 1 of the documentation.,product_issue
+,,,escalated,candidate_management,We don’t have documentation on completing your company’s infosec forms. Please contact your HackerRank account team or support for further assistance.,The provided documents discuss onboarding candidates and platform overviews but contain no guidance on infosec processes or form completion.,product_issue
+,,,replied,community_certification,"If you cannot see the Apply tab, it may be hidden because the tab is locked. To make it visible, click **Unlock** on the locked tab. For more details on unlocking tabs, see the interview settings documentation.",Guidance derived from Section 1 and Section 2 which state that clicking **Unlock** makes a tab visible to the candidate.,bug
+,,,replied,test_management,"Please run the HackerRank Compatibility check at https://www.hackerrank.com/compatibility and review the results. If you still encounter submission issues, email support@hackerrank.com with a screenshot of the error message.",Section 1 advises using the compatibility link and contacting support@hackerrank.com for such problems.,product_issue
+,,,replied,interview_management,Please run the System Compatibility Check at https://www.hackerrank.com/compatibility and take a screenshot of the Zoom connectivity error you are seeing. Then email the screenshot and details of the issue to support@hackerrank.com.,"Sections 2 and 4 instruct users to contact support@hackerrank.com with a screenshot when compatibility problems, including Zoom connectivity, occur.",bug
+,,,replied,test_management,Candidates must contact the hiring company or recruiter directly to request a new date and time for the assessment. HackerRank support does not have the authority to reschedule assessments for candidates. (Source: Core_Policies | Rescheduling section),"The documentation states that rescheduling must be done through the hiring company/recruiter, and HackerRank support cannot perform this action.",feature_request
+,,,replied,interview_management,"The platform automatically moves a candidate to the lobby only in two situations: (1) if no interviewer joins the scheduled interview within 3 minutes (Release Notes, Section 1) and (2) when all interviewers leave the interview (Virtual Lobby doc, Section 2). There is no configurable inactivity timeout for screen‑share sessions or for periods when interviewers are not actively on the HR screen. Therefore, the inactivity times cannot be extended beyond the built‑in rules.",Used Section 1 (Release Notes) for the 3‑minute rule and Section 2 (Virtual Lobby) for the 'all interviewers leave' rule; no documentation found on adjustable inactivity settings.,feature_request
+,,,replied,account_management,"If you can’t log in or are experiencing an account‑related issue, please request assistance through the Help Center:
+1. Click the message icon in the lower right corner of the Help Center.
+2. Start a conversation.
+3. Select ""I can't login.""",Used the login assistance steps from Section 3 (How To Get Support) which provide exact instructions for account problems.,bug
+,,,escalated,interview_management,We’re unable to locate documentation for removing an interviewer from the platform. Our support team will review your request and get back to you shortly.,"The provided documentation covers deleting interviews, interview questions, and removing team members, but does not contain a clear policy or steps for removing an interviewer. Therefore, escalation is required.",product_issue
+,,,replied,billing_payment,"To pause your subscription, follow these steps:
+1. Click the profile icon in the top‑right corner and select **Settings**.
+2. Go to the **Billing** section under **Subscription**.
+3. Click the **Cancel Plan** button; you will see a prompt about the new **Pause Subscription** feature. Confirm the pause.
 
-Please can you provide step-by-step instruction on how we are to reinvite them.
+Make sure you meet the prerequisites: an active subscription that started at least 30 days ago (including a 7‑day renewal grace period) and a monthly Individual Basic or Interview plan. Once paused, you will not be able to log in until you resume the subscription, and a popup will inform you of the pause status. (Source: Sections 3‑5 of the Pause Subscription documentation.)",The documentation provides step‑by‑step instructions for pausing a subscription (Sections 3 and 4) and lists the required prerequisites (Section 5). These details directly answer the user's request.,product_issue
+,,,replied,billing_payment,"Please check the Claude status page (https://status.claude.com/) for any known service disruptions or maintenance. If the status page shows no incidents, you can contact our Support team for further assistance by clicking the message icon in the bottom right of the Help Center or by selecting your initials in the lower left corner of the Claude Console and choosing ""Get help.""",Guidance to check status page and contact support is drawn from Section 2 (status page link) and Section 3 (contact support instructions).,bug
+,,,replied,card_management,"Visit our Lost or Stolen card page — https://www.visa.com/support/consumer/lost-stolen-card.html — to learn how to cancel your card, request an emergency replacement, and get guidance on handling identity theft involving your Visa card.",Section 1 provides the direct instruction to visit the Lost or Stolen card page for identity theft related to a Visa card.,product_issue
+,,,escalated,community_certification,We’re unable to find troubleshooting steps for a down Resume Builder in the current documentation. I’m escalating this issue to the appropriate team for further assistance.,No guidance on handling Resume Builder outages is present in the provided docs (Sections 1-5).,bug
+,,,replied,community_certification,"You can update the name on your certificate once per account. Follow these steps:
+1. Open your certificate page.
+2. In the **Full Name** field, enter the correct name.
+3. Click **Regenerate Certificate**.
+4. In the confirmation dialog, click **Update Name**.
+The platform will update your certificate with the new name. (See Sections 1, 3, and 4 of the Certifications FAQs.)","The documentation provides a clear step-by-step process for updating the name on a certificate (Sections 1, 3, and 4). No escalation needed.",product_issue
+,,,replied,payment_dispute,"To dispute a charge, contact your card issuer or bank using the freephone number printed on the front or back of your Visa card (free when dialing from within the USA). Your issuer may request detailed transaction information to resolve the dispute.",Section 1 of Visa\Support states that disputes should be directed to the issuer or bank via the freephone number on the card.,product_issue
+,,,replied,security_vulnerability,"If you have discovered a major security vulnerability in Claude, you should report it through our public vulnerability reporting process. You can start by using the thumbs‑down function directly in Claude to flag the issue, and then follow the instructions for the Model Safety Bug Bounty Program linked in the Public Vulnerability Reporting article.",Based on the Public Vulnerability Reporting section (Section 4) which references the Model Safety Bug Bounty Program and advises using the thumbs‑down function to report issues.,bug
+,,,replied,privacy_data,"To stop Claude’s crawler from accessing your site, add a robots.txt file (or update the existing one) in the top‑level directory of each subdomain you want to block. Include the following lines:
 
-Do we find their profile in 'Candidates' , put in Add time 53 minutes and then click 'reinvite' and send the email? The email to the candidate says 105 minutes as the duration though still so not sure how we can check?
+```
+User-agent: ClaudeBot
+Disallow: /
+```
 
-Thanks","How to reinvite candidate to Hackerrank 
-assessment and add extra time",HackerRank,Please escalate to human support,candidate_management,escalated,product_issue,"The provided documentation explains how to add extra time for candidates, but it does not contain instructions on reinviting candidates or updating the invitation email duration. Since the required information is not in the context, the ticket must be escalated."
-"i signed up using google login on hackerrank community , so i do not have a separate hackerrank password. please delete my account",,HackerRank,"We can help you delete your HackerRank Community account. Because you signed up using Google login, you must first set a password before the account can be removed. Please follow these steps:
-1. Set a password for your account by resetting it: go to the *Update or Reset Password* article and follow the ""Resetting password"" instructions.
-2. Once a password is set, log in to the HackerRank Community site.
-3. Click your profile icon (top‑right) → **Settings**.
-4. Scroll to the **Delete Accounts** section and click **Delete Account**.
-5. Choose a reason and confirm the deletion.
-After completing the confirmation, your account and all associated data will be permanently removed.
-If you encounter any issues during this process, please let us know.",account_management,replied,product_issue,The user needs to set a password before deletion as required for third‑party sign‑ins (Section 1) and then follow the deletion steps (Section 4).
-Where can I report a lost or stolen Visa card from India?,Card stolen,Visa,"You can report a lost or stolen Visa card by calling Visa’s Global Customer Assistance Services at +1 303‑967‑1090 from anywhere in the world, including India. This service is available 24/7, 365 days a year. (see Section 2) Alternatively, you may also call the local Visa lost‑card line at 000‑800‑100‑1219. (see Section 3)",card_management,replied,product_issue,"The documentation provides phone numbers for reporting lost or stolen cards globally (Section 2) and a generic lost‑card number (Section 3), which directly answer the user’s question."
-I bought Visa Traveller's Cheques from Citicorp and they were stolen in Lisbon last night. What do I do?,,Visa,"I'm sorry to hear about the theft of your Visa Traveller's Cheques. Since they were issued by Citicorp, you should contact Citicorp immediately to report the loss and begin the replacement or refund process. You can reach them at:
-- Freephone: 1‑800‑645‑6556 (U.S.)
-- Collect: 1‑813‑623‑1709 (U.S.)
-Their hours are Monday‑Friday, 6:30 am to 2:30 pm EST.
-When you call, have the cheque serial numbers, purchase details, and the circumstances of the loss ready, as the issuer will ask for this information to process a refund, which is usually arranged within 24 hours subject to terms and conditions.
-If you cannot reach Citicorp using the numbers above, you can also use the generic Visa traveller’s cheques contact form: [Contact us about traveller’s cheques](/supporting-info/travelers-cheques-contact-us.html).",card_management,replied,product_issue,Provided the issuing bank contact details for Citicorp and the required information for a refund per sections on reporting a lost cheque and requesting a refund.
+If you prefer to limit rather than fully block crawling, you can use the non‑standard Crawl‑delay extension, e.g.:
+
+```
+User-agent: ClaudeBot
+Crawl-delay: 1
+```
+
+Make sure the robots.txt file is reachable at `https://yourdomain.com/robots.txt`. (Source: Section 2, “To block a Bot from your entire website…”)","Used the robots.txt blocking instructions from Section 2 of the document “Does Anthropic crawl data from the web, and how can site owners block the crawler?” which provides the exact syntax for blocking ClaudeBot.",product_issue
+,,,replied,card_management,"You can obtain cash by using any Visa PLUS ATM worldwide. Locate one with Visa’s ATM locator: https://www.visa.com/atmlocator/. If you need emergency cash assistance, you can contact the Global Customer Assistance Service at +1 303 967 1090.",Provided ATM locator link per Section 4 and emergency cash phone number per Section 1.,product_issue
+,,,replied,billing_payment,"When you opt in to let Claude use your data for model improvement, the data is stored securely for up to two years. After that period it is deleted and is not used for training beyond that timeframe.",Section 2 states that data will be stored securely for up to two years and used for model training within that period. This directly answers the question about how long the data will be used.,product_issue
+,,,escalated,conversation_management,This issue requires human support. A support specialist will follow up with you shortly.,Destructive / harmful request detected,invalid
+,,,escalated,payment_dispute,This issue requires human support. A support specialist will follow up with you shortly.,Prompt injection / jailbreak attempt detected,product_issue
+,,,replied,api_usage,"For assistance with failing Claude requests on Amazon Bedrock, please contact AWS Support at https://aws.amazon.com/contact-us/ or reach out to your AWS account manager. You can also ask the community on AWS re:Post at https://repost.aws/.","Section 1 provides the recommended support contacts for Claude in Amazon Bedrock issues. No specific troubleshooting steps are documented, so the appropriate action is to direct the user to AWS Support.",bug
+,,,replied,account_management,"To remove a former employee from your HackerRank for Work hiring account, delete their candidate profile:
+1. Log in as a **Company Admin**.
+2. Go to the **Candidates** page.
+3. Search for the employee’s profile.
+4. Click the **delete** option for that candidate.
+(If you need to delete multiple candidates at once, email support@hackerrank.com as described in the GDPR bulk‑deletion guide.)","The guidance to delete a particular candidate’s profile is provided in Section 4 of the GDPR FAQs document, which outlines the steps for a Company Admin to remove a candidate’s data. Bulk deletion instructions are in Section 3, offering the support email for larger requests.",product_issue
+,,,replied,education,"You can set up the Claude LTI for your students by following the guide ""Set up the Claude LTI in Canvas by Instructure"" available here: https://support.claude.com/en/articles/11725453-set-up-the-claude-lti-in-canvas-by-instructure","The documentation lists a specific article for setting up the Claude LTI in Canvas, which directly addresses the professor's request (Section 1, Claude\Index).",product_issue
+,,,replied,card_management,In the US Virgin Islands merchants are allowed to require a minimum purchase of up to $10 for Visa credit card transactions. This is permitted under the $10 Minimum Rule for US and US territories.,Section 4 (Core_Policies) states the $10 Minimum Rule applies in US territories like the US Virgin Islands. Section 1 confirms merchants may require a minimum of US$10 for credit cards in those locations.,product_issue
