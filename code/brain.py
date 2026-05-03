@@ -92,11 +92,12 @@ class Reasoner:
             return generate_escalation_response(escalation_reason)
 
         prompt = self._build_prompt(issue, subject, company, product_area, request_type, context_str)
+        has_context = bool(context_str and context_str != "No relevant documentation found.")
 
         if self.provider == "openrouter" and self.openrouter_client:
-            return self._call_openrouter(prompt)
+            result = self._call_openrouter(prompt)
         elif self.provider == "claude" and self.anthropic_client:
-            return self._call_claude(prompt)
+            result = self._call_claude(prompt)
         else:
             return {
                 'status': 'escalated',
@@ -104,6 +105,17 @@ class Reasoner:
                 'justification': 'OpenRouter and Claude both unavailable — using safe escalation.',
                 'confidence': 0.0,
             }
+
+        if result.get('status') == 'escalated' and has_context:
+            extractive = generate_extractive_response(
+                context_str,
+                product_area,
+                'LLM escalated despite available corpus context',
+            )
+            if extractive.get('status') == 'replied':
+                return extractive
+
+        return result
 
     def _build_prompt(self, issue, subject, company, product_area, request_type, context_str) -> str:
         """Build the grounded LLM prompt with strict JSON output format."""
@@ -222,7 +234,7 @@ def generate_extractive_response(context_str: str, product_area: str, fallback_r
 
     return {
         'status': 'replied',
-        'response': f"Based on the support documentation: {excerpt}",
+        'response': f"{excerpt}",
         'justification': f"Extractive fallback from local corpus ({product_area}). Note: {fallback_reason}.",
         'confidence': 0.5,
     }

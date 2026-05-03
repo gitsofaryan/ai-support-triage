@@ -127,7 +127,7 @@ class SupportTriageAgent:
  | |_| |/ _` |/ __| |/ / / _ \ '__| |_) / _` | '_ \| |/ / 
  |  _  | (_| | (__|   <  __/ |  |  _ < (_| | | | |   <  
  |_| |_|\__,_|\___|_|\_\___|_|  |_| \_\__,_|_| |_|_|\_\ 
-                                                         
+                                                          
   _____     _                        ____                            _   
  |_   _| __(_) __ _  __ _  ___      / ___| _   _ _ __  _ __   ___  _ __| |_ 
    | || '__| |/ _` |/ _` |/ _ \ ____\___ \| | | | '_ \| '_ \ / _ \| '__| __|
@@ -135,9 +135,9 @@ class SupportTriageAgent:
    |_||_|  |_|\__,_|\__, |\___|     |____/ \__,_| .__/| .__/ \___/|_|   \__|
                     |___/                       |_|   |_|                   
 [/bold green]""", justify="center")
-        console.print("[bold white]>> Hybrid RAG · Multi-Domain Orchestrator <<[/bold white]", justify="center")
-        console.print("[dim]v2.1 · FAISS + BM25 + RRF · Premium UI[/dim]", justify="center")
-        console.print("\n" + "━" * console.width, style="blue")
+        console.print("[bold white]>> HackerRank Orchestrate Triage Agent <<[/bold white]", justify="center")
+        console.print("[bold dim]v2.5 · Hybrid RAG · Zero-Cost Scaling[/bold dim]", justify="center")
+        console.print("\n" + "━" * console.width, style="bold blue")
         
         # Simple, clean startup delay for "premium" feel
         with console.status("[bold cyan]Spinning up Orchestrator engines...[/bold cyan]"):

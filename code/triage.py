@@ -31,6 +31,7 @@ COMPANY_KEYWORDS = {
         'card', 'payment', 'visa', 'viza', 'credit', 'debit', 'transaction',
         'merchant', 'dispute', 'fraud', 'cheque', 'traveller', 'minimum',
         'spend', 'cash', 'blocked', 'stolen', 'identity theft',
+        'viisaa', 'visaa',
     ],
 }
 

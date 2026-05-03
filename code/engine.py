@@ -17,16 +17,10 @@ import os
 import hashlib
 import pickle
 from pathlib import Path
-from typing import List, Dict, Optional, Any
-import warnings
+from typing import List, Any, Optional
 
-# Lazy imports to speed up startup
-# from langchain_community.document_loaders import DirectoryLoader, TextLoader
-# from langchain_text_splitters import RecursiveCharacterTextSplitter
-# from langchain_community.vectorstores import FAISS
-# from langchain_community.retrievers import BM25Retriever
-# from langchain_openai import OpenAIEmbeddings
 from langchain_core.documents import Document
+from langchain_community.retrievers import BM25Retriever, TFIDFRetriever
 
 # EnsembleRetriever location varies across LangChain versions
 try:
@@ -41,10 +35,10 @@ except ImportError:
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"  # Free local model — no API credits needed
+EMBEDDING_MODEL = "none" # Zero-model statistical mode
 CHUNK_SIZE = 2000
 CHUNK_OVERLAP = 150
-CACHE_DIR = ".faiss_cache"
+CACHE_DIR = ".retriever_cache"
 
 # No hardcoded knowledge used. Purely corpus-based.
 
@@ -148,105 +142,78 @@ class HybridEngine:
         return splits
 
     def _get_embeddings(self) -> Any:
-        """Initialize local HuggingFace embeddings (no API needed, zero cost)."""
-        try:
-            from langchain_huggingface import HuggingFaceEmbeddings
-        except ImportError:
-            from langchain_community.embeddings import HuggingFaceEmbeddings
-        if self._embeddings is None:
-            self._embeddings = HuggingFaceEmbeddings(
-                model_name=EMBEDDING_MODEL,
-                model_kwargs={'device': 'cpu'},
-                encode_kwargs={'normalize_embeddings': True}
-            )
-        return self._embeddings
+        """Statistical mode: No neural embeddings needed."""
+        return None
 
     def _initialize_pipeline(self):
-        """Build the full hybrid pipeline with FAISS, Splits, and BM25 caching."""
-        from halo import Halo
-        from langchain_community.vectorstores import FAISS
-        from langchain_community.retrievers import BM25Retriever
+        """Build the Zero-Model Hybrid pipeline (BM25 + TF-IDF + RRF)."""
+        self._log(f"[Hybrid] Initializing Hybrid RAG Engine (Zero-Model Mode)...")
         
-        with Halo(text='Initializing Hybrid RAG Engine...', spinner='dots') if self.verbose else open(os.devnull, 'w'):
-            # Step 1: Check Cache Validity
-            cache_path = self._get_cache_path()
-            splits_cache = cache_path + ".splits.pkl"
-            bm25_cache = cache_path + ".bm25.pkl"
-            faiss_path = cache_path
-            fingerprint_path = cache_path + ".fingerprint"
-            current_fingerprint = self._get_data_fingerprint()
-            embeddings = self._get_embeddings()
+        cache_path = self._get_cache_path()
+        splits_cache = cache_path + ".splits.pkl"
+        bm25_cache = cache_path + ".bm25.pkl"
+        tfidf_cache = cache_path + ".tfidf.pkl"
+        fingerprint_path = cache_path + ".fingerprint"
+        current_fingerprint = self._get_data_fingerprint()
 
-            # CRITICAL: always initialize bm25_retriever to avoid scoping bug
-            bm25_retriever = None
-            cache_valid = False
+        bm25_retriever = None
+        tfidf_retriever = None
+        cache_valid = False
 
-            if os.path.exists(faiss_path) and os.path.exists(fingerprint_path) and os.path.exists(splits_cache) and os.path.exists(bm25_cache):
-                try:
-                    with open(fingerprint_path, 'r') as f:
-                        cached_fingerprint = f.read().strip()
-                    if cached_fingerprint == current_fingerprint:
-                        self._log("[Engine] Loading cached knowledge...")
-                        
-                        # Load FAISS
-                        self.vectorstore = FAISS.load_local(
-                            faiss_path, embeddings,
-                            allow_dangerous_deserialization=True
-                        )
-                        
-                        # Load Splits
-                        with open(splits_cache, 'rb') as f:
-                            self._all_splits = pickle.load(f)
-                            
-                        # Load BM25
-                        with open(bm25_cache, 'rb') as f:
-                            bm25_retriever = pickle.load(f)
-                        
-                        cache_valid = True
-                        self._log("[Engine] Knowledge base loaded ✓")
-                except Exception as e:
-                    self._log(f"[Hybrid] Cache load failed: {e}, rebuilding...")
-                    bm25_retriever = None
+        if os.path.exists(fingerprint_path) and os.path.exists(splits_cache) and os.path.exists(bm25_cache) and os.path.exists(tfidf_cache):
+            try:
+                with open(fingerprint_path, 'r') as f:
+                    cached_fingerprint = f.read().strip()
+                if cached_fingerprint == current_fingerprint:
+                    self._log("[Engine] Loading cached knowledge (Statistical Mode)...")
+                    
+                    with open(splits_cache, 'rb') as f:
+                        self._all_splits = pickle.load(f)
+                    with open(bm25_cache, 'rb') as f:
+                        bm25_retriever = pickle.load(f)
+                    with open(tfidf_cache, 'rb') as f:
+                        tfidf_retriever = pickle.load(f)
+                    
+                    cache_valid = True
+                    self._log("[Engine] Knowledge base loaded ✓")
+            except Exception as e:
+                self._log(f"[Hybrid] Cache load failed: {e}, rebuilding...")
 
-            if not cache_valid:
-                # Step 2: Load and split all documents
-                self._log(f"[Hybrid] Rebuilding index (corpus changed or first run)...")
-                splits = self._load_and_split_documents()
-                self._all_splits = splits
+        if not cache_valid:
+            self._log(f"[Hybrid] Rebuilding index (Zero-Model Mode)...")
+            splits = self._load_and_split_documents()
+            self._all_splits = splits
 
-                # Step 3: Build FAISS index
-                self._log(f"[Hybrid] Building FAISS index for {len(splits)} chunks...")
-                self.vectorstore = FAISS.from_documents(splits, embeddings)
-                
-                # Step 4: Build BM25 index
-                self._log("[Hybrid] Building BM25 index...")
-                bm25_retriever = BM25Retriever.from_documents(splits)
-                bm25_retriever.k = 5
+            self._log("[Hybrid] Building BM25 index (Lexical)...")
+            bm25_retriever = BM25Retriever.from_documents(splits)
+            bm25_retriever.k = 5
 
-                # Save all to disk
-                try:
-                    self.vectorstore.save_local(faiss_path)
-                    with open(splits_cache, 'wb') as f:
-                        pickle.dump(self._all_splits, f)
-                    with open(bm25_cache, 'wb') as f:
-                        pickle.dump(bm25_retriever, f)
-                    with open(fingerprint_path, 'w') as f:
-                        f.write(current_fingerprint)
-                    self._log("[Hybrid] All components cached to disk ✓")
-                except Exception as e:
-                    self._log(f"[Hybrid] Warning: could not cache index: {e}")
+            self._log("[Hybrid] Building TF-IDF index (Statistical)...")
+            tfidf_retriever = TFIDFRetriever.from_documents(splits)
+            tfidf_retriever.k = 5
 
-            # Step 5: Ensemble (Reciprocal Rank Fusion)
-            faiss_retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
-            if EnsembleRetriever and bm25_retriever is not None:
-                self._log("[Hybrid] Ensemble Retriever (50/50 RRF) ✓")
-                self.retriever = EnsembleRetriever(
-                    retrievers=[bm25_retriever, faiss_retriever],
-                    weights=[0.5, 0.5]
-                )
-            else:
-                self._log("[Hybrid] Using FAISS-only retriever")
-                self.retriever = faiss_retriever
+            try:
+                with open(splits_cache, 'wb') as f:
+                    pickle.dump(self._all_splits, f)
+                with open(bm25_cache, 'wb') as f:
+                    pickle.dump(bm25_retriever, f)
+                with open(tfidf_cache, 'wb') as f:
+                    pickle.dump(tfidf_retriever, f)
+                with open(fingerprint_path, 'w') as f:
+                    f.write(current_fingerprint)
+                self._log("[Hybrid] Components cached to disk ✓")
+            except Exception as e:
+                self._log(f"[Hybrid] Warning: could not cache index: {e}")
+
+        if EnsembleRetriever and bm25_retriever and tfidf_retriever:
+            self._log("[Hybrid] Ensemble Retriever (BM25 + TF-IDF RRF) ✓")
+            self.retriever = EnsembleRetriever(
+                retrievers=[bm25_retriever, tfidf_retriever],
+                weights=[0.5, 0.5]
+            )
+        else:
+            self._log("[Hybrid] Fallback: BM25-only")
+            self.retriever = bm25_retriever or tfidf_retriever
 
         self._log(f"[Hybrid] ✓ Pipeline ready ({len(self._all_splits)} chunks indexed)")
 
@@ -261,6 +228,8 @@ class HybridEngine:
         """
         # Intent-aware query expansion/boosting
         boosted_query = query
+        if domain:
+            boosted_query = f"{boosted_query} {domain}"
         high_intent_terms = ['refund', 'fraud', 'stolen', 'blocked', 'hacked', 'cheat', 'plagiarism']
         if any(term in query.lower() for term in high_intent_terms):
             # Double down on critical terms in the query
@@ -271,11 +240,10 @@ class HybridEngine:
 
         if domain:
             domain_lower = domain.lower()
-            filtered = [
+            results = [
                 doc for doc in results
                 if doc.metadata.get("domain") in (domain_lower, "global")
             ]
-            results = filtered if filtered else results
 
         # Deduplicate and limit
         seen_content = set()

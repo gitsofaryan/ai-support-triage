@@ -42,17 +42,15 @@ OUTPUT: output.csv
 
 ## Modules
 
-| File               | Purpose                                                      |
-|--------------------|--------------------------------------------------------------|
-| `main.py`          | CLI entry point, agent orchestration, Rich UI output         |
-| `corpus.py`        | Markdown loading, heading chunking, BM25 scorer              |
-| `retriever.py`     | Domain-filtered BM25 retrieval with confidence scoring       |
-| `hybrid_engine.py` | FAISS + BM25 Ensemble Retriever with disk caching            |
-| `safety.py`        | Deterministic escalation rules (regex-based)                 |
-| `classifier.py`    | Company detection, product area, request type classification |
-| `reasoning.py`     | LLM response generation (OpenRouter + Claude + fallback)     |
-| `auditor.py`       | Senior Auditor — validates LLM output quality                |
-| `output.py`        | Writes the prediction CSV                                    |
+| File         | Purpose                                                     |
+|--------------|-------------------------------------------------------------|
+| `main.py`    | CLI orchestrator, agent pipeline, Rich UI output            |
+| `gate.py`    | Safety gates — escalation rules (fraud, injection, etc.)    |
+| `triage.py`  | Classification — company, product area, request type        |
+| `engine.py`  | Hybrid RAG retrieval — FAISS + BM25 + RRF ensemble         |
+| `brain.py`   | LLM response generation — OpenRouter → Claude → extractive |
+| `output.py`  | CSV output writer (exactly per spec)                        |
+| `check.py`   | Utilities & validation                                      |
 
 ## Installation
 
